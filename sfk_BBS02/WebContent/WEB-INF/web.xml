@@ -1,7 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>sfk_BBS02</display-name>
-  <welcome-file-list>
+ 
+  		<!-- <context-param>
+			<param-name>contextConfigLocation</param-name>
+		 	<param-value>classpath:applicationContext.xml</param-value>
+		</context-param> -->
+<!--   <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/resource/applicationContext.xml</param-value>
+	</context-param> --> 
+	<!-- config log4j  first Part -->
+ 	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>classpath:log4j.properties</param-value>
+	</context-param>  
+	<!-- /WEB-INF/classes/applicationContext-*.xml -->
+	
+		<!-- Srping监听器 -->
+<!-- 	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener> --> 
+	<!-- config log4j  second Part -->
+	<!-- 加载log4j配置文件 -->
+    <listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>springMVC</servlet-name>
+		<servlet-class>
+			org.springframework.web.servlet.DispatcherServlet
+		</servlet-class>
+     	<init-param>
+     		<param-name>contextConfigLocation</param-name>
+		 	<param-value>classpath:applicationContext.xml</param-value>
+	
+     	</init-param>
+	
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<!-- 有的项目中这里写的是.do,这样分发器只会分发带有.do的请求,
+		 就可以规避将js.css,.png等文件的路径当作一个请求,当前没有写.do,就要用到
+		  <mvc:annotation-driven />
+    	  <mvc:resources mapping="/css/**" location="/css/"/>
+    	  将.css等文件不当作一个请求 -->
+	<servlet-mapping>
+		<servlet-name>springMVC</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	 <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
     <welcome-file>index.jsp</welcome-file>
@@ -9,4 +57,5 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
 </web-app>
