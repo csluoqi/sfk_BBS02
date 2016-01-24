@@ -2,6 +2,10 @@
 * {
 	/*word-break: break-all;*/
 }
+body {
+	/*隐藏X轴出现的滚动条  */
+	overflow-x: hidden; 
+}
 body,div,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,form,input,textarea,p {
 	margin:0px;
 	padding:0px;
