@@ -8,6 +8,9 @@ package sfk.bbs.common.constance;
  * @author rocky
  */
 public final class PagePath
-{
+{   
+    /**测试Spring框--显示学生列表的页面***/
     public final static String STUDENT_LIST = "testPage/studentList";
+    /***bbs后台显示页面**/
+    public final static String ADMIN_INDEX = "admin/adminIndex"; 
 }
