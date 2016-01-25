@@ -31,6 +31,19 @@ public class AdminIndexServiceImpl implements AdminIndexService
         // TODO Auto-generated method stub
         return adminIndexDao.deleteFatherModule(id);
     }
+    @Override
+    public boolean saveFatherModule(FatherModule fatherModule)
+    {
+        // TODO Auto-generated method stub
+        /**
+         * 先做一个简单的校验,后期尝试有验证器做
+         */
+        if (fatherModule.getModuelName() == null && "".equals(fatherModule.getModuelName()))
+        {
+            return false;
+        }
+        return adminIndexDao.saveFatherModule(fatherModule);
+    }
 
     
 }

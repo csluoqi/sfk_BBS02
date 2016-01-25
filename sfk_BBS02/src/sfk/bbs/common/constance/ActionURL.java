@@ -12,4 +12,9 @@ public final class ActionURL
     public final static String STUDENT_LIST = "/studentList";
     /**进入后台管理页面的链接***/
     public final static String ADMIN_INDEX = "/adminIndex"; 
+    
+    /**进入添加父板块页面的链接**/
+    public final static String NEW_FATHER_MODULE = "/newFatherModule";
+    /****saveFatherModule**/
+    public final static String SAVE_FATHER_MODULE = "/saveFatherModule";
 }

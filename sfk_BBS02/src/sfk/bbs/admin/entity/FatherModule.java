@@ -55,4 +55,11 @@ public class FatherModule
         this.sort = sort;
     }
 
+    @Override
+    public String toString()
+    {
+        return "FatherModule [id=" + id + ", moduelName=" + moduelName
+                + ", sort=" + sort + "]";
+    }
+
 }

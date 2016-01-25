@@ -2,6 +2,7 @@ package sfk.bbs.admin.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,21 @@ public class AdminIndexDao implements AdminIndexDaoService
             return false;
         }
         return true;
+    }
+
+    @Override
+    public boolean saveFatherModule(FatherModule fatherModule)
+    {
+        final String sql = "insert into sfk_father_module(module_name,sort)values(?,?)";
+        Object[] params = { fatherModule.getModuelName(),
+                fatherModule.getSort() };
+        int[] paramTypes = new int[] { Types.VARCHAR, Types.INTEGER };
+        int affectrow = jdbc.update(sql, params, paramTypes);
+        if (affectrow != 0)
+        {
+            return true;
+        }
+        return false;
     }
 
 }
