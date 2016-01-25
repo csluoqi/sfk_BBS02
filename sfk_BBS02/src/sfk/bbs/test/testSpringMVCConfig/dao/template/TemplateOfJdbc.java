@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sfk.bbs.common.databaseUtil.DataBaseHelper;
-import sfk.bbs.test.testSpringMVCConfig.exception.DataAccessException;
+import sfk.bbs.test.testSpringMVCConfig.exception.DataBasesAccessExceptions;
 
 
 public class TemplateOfJdbc<T>
@@ -268,11 +268,11 @@ public class TemplateOfJdbc<T>
      * 
      * @param callback
      * @return 返回回调方法的返回值
-     * @throws DataAccessException
+     * @throws DataBasesAccessExceptions
      *             所有回调方法所抛出的方法都会被包转成此运行时异常,该异常extends RuntimeException
      *             {@link CallBack}
      */
-    protected <E> E template(CallBack<E> callback) throws DataAccessException
+    protected <E> E template(CallBack<E> callback) throws DataBasesAccessExceptions
     {
         Connection conn = null;
         PreparedStatement pstm = null;
@@ -283,7 +283,7 @@ public class TemplateOfJdbc<T>
             return callback.doInCallBack(conn, pstm, rs);
         } catch (Throwable e)
         {
-            throw new DataAccessException(e);
+            throw new DataBasesAccessExceptions(e);
         } finally
         {
             DataBaseHelper.getDbInstance().CloseConnection(conn, pstm, rs);

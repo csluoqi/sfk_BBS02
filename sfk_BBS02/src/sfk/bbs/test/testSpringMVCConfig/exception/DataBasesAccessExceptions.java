@@ -6,39 +6,39 @@ import java.sql.ResultSet;
 
 import sfk.bbs.common.databaseUtil.DataBaseHelper;
 
-public class DataAccessException extends RuntimeException
+public class DataBasesAccessExceptions extends RuntimeException
 {
     /**
      * 
      */
     private static final long serialVersionUID = -5764150035487032327L;
 
-    public DataAccessException()
+    public DataBasesAccessExceptions()
     {
         super();
         // TODO Auto-generated constructor stub
     }
 
-    public DataAccessException(String message, Throwable cause,
+    public DataBasesAccessExceptions(String message, Throwable cause,
             boolean enableSuppression, boolean writableStackTrace)
     {
         super(message, cause, enableSuppression, writableStackTrace);
         // TODO Auto-generated constructor stub
     }
 
-    public DataAccessException(String message, Throwable cause)
+    public DataBasesAccessExceptions(String message, Throwable cause)
     {
         super(message, cause);
         // TODO Auto-generated constructor stub
     }
 
-    public DataAccessException(String message)
+    public DataBasesAccessExceptions(String message)
     {
         super(message);
         // TODO Auto-generated constructor stub
     }
 
-    public DataAccessException(Throwable cause)
+    public DataBasesAccessExceptions(Throwable cause)
     {
         super(cause);
         // TODO Auto-generated constructor stub
@@ -54,7 +54,7 @@ public class DataAccessException extends RuntimeException
      E doInCallBack(Connection conn, PreparedStatement pstm, ResultSet rs)throws Throwable;
      
  }
- protected <E> E template(CallBack<E> callback) throws DataAccessException
+ protected <E> E template(CallBack<E> callback) throws DataBasesAccessExceptions
  {
      Connection conn = null;
      PreparedStatement pstm = null;
@@ -65,7 +65,7 @@ public class DataAccessException extends RuntimeException
         return callback.doInCallBack(conn, pstm, rs);
     } catch (Throwable e)
     {
-        throw new DataAccessException(e);
+        throw new DataBasesAccessExceptions(e);
     }
      finally
      {

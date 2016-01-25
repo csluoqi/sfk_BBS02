@@ -40,7 +40,7 @@ public class TempletTest
     @Autowired
     private JdbcTemplate jdbcTemplate;
     @Test
-    public void handle() throws SQLException
+    public void select1() throws SQLException
     {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
@@ -61,7 +61,7 @@ public class TempletTest
     
     
     @Test
-    public void handle2()
+    public void select2()
     {
         //JdbcTemplate jdbcTemplate = (JdbcTemplate)SpringHelper.getSpringHelper().getBean("jdbcTemplate");
         jdbcTemplate.query("select * from tb_StudentOfTestSpringMVC", new RowCallbackHandler()
@@ -75,7 +75,7 @@ public class TempletTest
     }
     
     @Test
-    public void handle7()//经常使用
+    public void insert1()//经常使用
     {
         //id | name | gender | age  
         final String sql = "insert into tb_StudentOfTestSpringMVC(name,gender,age)values(?,?,?) ";
@@ -84,7 +84,7 @@ public class TempletTest
     }
     
     @Test
-    public void handle9()//经常使用
+    public void insert2()//经常使用
     {
         final String sql = "insert into tb_StudentOfTestSpringMVC(name,gender,age)values(?,?,?) ";
         Object[] params = {"Spring","M",30};
@@ -96,7 +96,7 @@ public class TempletTest
      * 返回主键,常用
      */
     @Test
-    public void handle10()
+    public void insert3()
     {
         final String sql = "insert into tb_StudentOfTestSpringMVC(name,gender,age)values(?,?,?) ";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -118,7 +118,7 @@ public class TempletTest
     }
     
     @Test
-    public void handle11()//经常使用
+    public void update1()//经常使用
     {
         final String sql = "update tb_StudentOfTestSpringMVC set name = ?,gender = ?,age = ? where id = ? ;";
         int affectRow = jdbcTemplate.update(sql,"Spring","M",8,8);
@@ -126,7 +126,7 @@ public class TempletTest
     }
     
     @Test
-    public void handle12()
+    public void delete1()
     {
         final String sql = "delete from tb_StudentOfTestSpringMVC where id = ?";
         jdbcTemplate.update(sql,8);

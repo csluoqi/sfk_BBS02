@@ -31,7 +31,7 @@
     <!-- <mvc:annotation-driven conversion-service="conversionService3"/> -->
    
     <!-- 扫描的包 -->
-    <context:component-scan base-package="sfk.bbs.test.testSpringMVCConfig"/>
+    <context:component-scan base-package="sfk.bbs"/>
     
      <aop:aspectj-autoproxy />   
     <bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
@@ -39,7 +39,9 @@
 	<!-- 这个的作用是让DispatcherServlet不将下列路径理解为一个request请求,
     在项目中,这个是必须的,如果没有加这些就可能造成上述问题 -->
     <mvc:annotation-driven />
-    <mvc:resources mapping="/css/**" location="/css/"/>
+    <!-- <mvc:resources mapping="/css/**" location="/css/"/>
+    <mvc:resources mapping="/js/**" location="/js/"/> -->
+    <mvc:resources mapping="/style/**" location="/style/"/>
     <mvc:resources mapping="/js/**" location="/js/"/>
     <mvc:resources mapping="/*.html" location="/"/>
     
@@ -74,12 +76,12 @@
 <!-- 最大空闲时间,60秒内未使用则连接被丢弃。若为0则永不丢弃。 Default:0-->
 <property name="maxIdleTime" value="${jdbc.maxIdleTime}"/>
 <!-- 当连接池中的连接耗尽的时候c3p0一次同时获取的连接数. Default:3-->
-<property name="acquireIncrement" value="${jdbc.acquireIncrement}"/>
+<!-- <property name="acquireIncrement" value="${jdbc.acquireIncrement}"/> -->
 <!-- JDBC的标准,用以控制数据源内加载的PreparedStatements数量。
 但由于预缓存的statements属于单个connection而不是整个连接池所以设置这个参数需要考虑到多方面的因数.如果maxStatements与maxStatementsPerConnection均为0,则缓存被关闭。Default:0-->
-<property name="maxStatements" value="${jdbc.maxStatements}"/>
+<!-- <property name="maxStatements" value="${jdbc.maxStatements}"/> -->
 <!-- 每60秒检查所有连接池中的空闲连接.Default:0 -->
-<property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}"/>
+<!-- <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}"/> -->
 </bean>
     
     

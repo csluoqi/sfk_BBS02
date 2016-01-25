@@ -8,5 +8,8 @@ package sfk.bbs.common.constance;
  */
 public final class ActionURL
 {
+    /**测试Spring框架-- 显示学生的请求链接**/
     public final static String STUDENT_LIST = "/studentList";
+    /**进入后台管理页面的链接***/
+    public final static String ADMIN_INDEX = "/adminIndex"; 
 }
