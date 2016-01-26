@@ -49,6 +49,7 @@ public class AdminIndexAction
                 .findAllFatherModule();
         model.addAttribute("fatherModules", fatherModules);
         // log.info(fatherModules);
+        //log.info("request.getCharacterEncoding() : "+request.getCharacterEncoding());
         return PagePath.ADMIN_INDEX;
     }
 
