@@ -11,8 +11,17 @@ public final class PagePath
 {   
     /**测试Spring框--显示学生列表的页面***/
     public final static String STUDENT_LIST = "testPage/studentList";
+    /**输入学生页面的页面**/
+    public final static String INPUT_STUDENT = "testPage/inputStudent";
+    
     /***bbs后台显示页面**/
     public final static String ADMIN_INDEX = "admin/adminIndex";
-    /****/
+    /**新增父版块**/
     public final static String NEW_FATHER_MODULE = "admin/newFatherModule";
+    /**修改父版块页面updateFatherModule**/
+    public final static String UPDATE_FATHER_MODULE = "admin/updateFatherModule";
+    
+    /**新增子版块newSonModule**/
+    public final static String NEW_SON_MODULE = "admin/newSonModule";
+    
 }

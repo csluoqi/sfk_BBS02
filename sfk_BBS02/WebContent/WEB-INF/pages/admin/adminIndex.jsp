@@ -21,10 +21,10 @@
 				<tr id="fatherModule_${fatherModule.id}">
 					<td><input class="sort" type="text" name="sort"
 						value='${fatherModule.sort}' /></td>
-					<td>${fatherModule.moduelName }</td>
-					<td><a href="#">[访问]</a>&nbsp;&nbsp;<a href="#">[编辑]</a>&nbsp;&nbsp;<a
+					<td>${fatherModule.moduleName }</td>
+					<td><a href="#">[访问]</a>&nbsp;&nbsp;<a href="${bathPath}updateFatherModuleGo/${fatherModule.id}">[编辑]</a>&nbsp;&nbsp;<a
 						href="javascript:void(0)"
-						onclick="DeleteFatherModule('${fatherModule.id}','${fatherModule.moduelName }')">[删除]</a></td>
+						onclick="DeleteFatherModule('${fatherModule.id}','${fatherModule.moduleName }')">[删除]</a></td>
 				</tr>
 			</c:forEach>
 		</table>

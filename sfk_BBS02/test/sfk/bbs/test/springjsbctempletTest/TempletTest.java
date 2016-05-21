@@ -25,11 +25,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import sfk.bbs.common.springUtil.SpringHelper;
 import sfk.bbs.test.testSpringMVCConfig.domain.StudentOfTestSpringMVC;
+
 /**
- * 又有一种世上无难事的感觉
- * 1.添加jar包
- * 2.配置xml文件
- * 3.代码
+ * 又有一种世上无难事的感觉 1.添加jar包 2.配置xml文件 3.代码
+ * 
  * @author rocky
  *
  */
@@ -39,59 +38,79 @@ public class TempletTest
 {
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    /**
+     * 一般查询数据的做法
+     * 
+     * @throws SQLException
+     */
     @Test
     public void select1() throws SQLException
     {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/sfkbbs?useUnicode=true&characterEncoding=utf-8");
+        dataSource
+                .setUrl("jdbc:mysql://localhost:3306/sfkbbs?useUnicode=true&characterEncoding=utf-8");
         dataSource.setUsername("root");
         dataSource.setPassword("2011211961");
         Connection conn = dataSource.getConnection();
-        PreparedStatement pstm = conn.prepareStatement("select * from tb_StudentOfTestSpringMVC");
+        PreparedStatement pstm = conn
+                .prepareStatement("select * from tb_StudentOfTestSpringMVC");
         ResultSet rs = pstm.executeQuery();
-        while(rs.next())
+        while (rs.next())
         {
-            System.out.println(rs.getInt("id")+"==="+rs.getString("name"));
+            System.out.println(rs.getInt("id") + "===" + rs.getString("name"));
         }
         rs.close();
         pstm.close();
         conn.close();
     }
-    
-    
+
+    /**
+     * 查询所有
+     */
     @Test
     public void select2()
     {
-        //JdbcTemplate jdbcTemplate = (JdbcTemplate)SpringHelper.getSpringHelper().getBean("jdbcTemplate");
-        jdbcTemplate.query("select * from tb_StudentOfTestSpringMVC", new RowCallbackHandler()
-        {
-            @Override
-            public void processRow(ResultSet rs) throws SQLException
-            {
-                System.out.println(rs.getInt("id")+"==="+rs.getString("name"));
-            }
-        });
+        // JdbcTemplate jdbcTemplate =
+        // (JdbcTemplate)SpringHelper.getSpringHelper().getBean("jdbcTemplate");
+        jdbcTemplate.query("select * from tb_StudentOfTestSpringMVC",
+                new RowCallbackHandler()
+                {
+                    @Override
+                    public void processRow(ResultSet rs) throws SQLException
+                    {
+                        System.out.println(rs.getInt("id") + "==="
+                                + rs.getString("name"));
+                    }
+                });
     }
-    
+
+    /**
+     * 新增一条数据
+     */
     @Test
-    public void insert1()//经常使用
+    public void insert1()// 经常使用
     {
-        //id | name | gender | age  
+        // id | name | gender | age
         final String sql = "insert into tb_StudentOfTestSpringMVC(name,gender,age)values(?,?,?) ";
-        int affectRow = jdbcTemplate.update(sql,"Spring","M",30);
+        int affectRow = jdbcTemplate.update(sql, "Spring", "M", 30);
         System.out.println(affectRow);
     }
-    
+
+    /***
+     * 新增一条数据
+     */
     @Test
-    public void insert2()//经常使用
+    public void insert2()// 经常使用
     {
         final String sql = "insert into tb_StudentOfTestSpringMVC(name,gender,age)values(?,?,?) ";
-        Object[] params = {"Spring","M",30};
-        int affectRow = jdbcTemplate.update(sql, params, new int[]{Types.VARCHAR,Types.VARCHAR,Types.INTEGER});
+        Object[] params = { "Spring", "M", 30 };
+        int affectRow = jdbcTemplate.update(sql, params, new int[] {
+                Types.VARCHAR, Types.VARCHAR, Types.INTEGER });
         System.out.println(affectRow);
     }
-    
+
     /**
      * 返回主键,常用
      */
@@ -102,12 +121,13 @@ public class TempletTest
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(new PreparedStatementCreator()
         {
-            
+
             @Override
             public PreparedStatement createPreparedStatement(Connection con)
                     throws SQLException
             {
-                PreparedStatement ps = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement ps = con.prepareStatement(sql,
+                        Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, "lilei");
                 ps.setString(2, "male");
                 ps.setInt(3, 25);
@@ -116,33 +136,40 @@ public class TempletTest
         }, keyHolder);
         System.out.println("primary key : " + keyHolder.getKey().intValue());
     }
-    
+
+    /***
+     * 更新
+     */
     @Test
-    public void update1()//经常使用
+    public void update1()// 经常使用
     {
         final String sql = "update tb_StudentOfTestSpringMVC set name = ?,gender = ?,age = ? where id = ? ;";
-        int affectRow = jdbcTemplate.update(sql,"Spring","M",8,8);
+        int affectRow = jdbcTemplate.update(sql, "Spring", "M", 8, 8);
         System.out.println(affectRow);
     }
-    
+
+    /**
+     * 删除
+     */
     @Test
     public void delete1()
     {
         final String sql = "delete from tb_StudentOfTestSpringMVC where id = ?";
-        jdbcTemplate.update(sql,8);
+        jdbcTemplate.update(sql, 8);
     }
-    
+
     /**
-     * 经常使用,推荐
+     * 查找一条，带param，经常使用,推荐
      */
     @Test
     public void handle14()
     {
         final String sql = "select * from tb_StudentOfTestSpringMVC where id=?";
-        final List<StudentOfTestSpringMVC> studentList = new ArrayList<StudentOfTestSpringMVC>(1);
-        jdbcTemplate.query(sql, new Object[]{9}, new RowCallbackHandler()
+        final List<StudentOfTestSpringMVC> studentList = new ArrayList<StudentOfTestSpringMVC>(
+                1);
+        jdbcTemplate.query(sql, new Object[] { 9 }, new RowCallbackHandler()
         {
-            
+
             @Override
             public void processRow(ResultSet rs) throws SQLException
             {
@@ -150,30 +177,32 @@ public class TempletTest
                 student.setId(rs.getLong("id"));
                 student.setName(rs.getString("name"));
                 student.setGender(rs.getString("gender"));
-                student.setAge(rs.getInt("age"));
-                
+                // student.setAge(rs.getInt("age"));
+
                 studentList.add(student);
-                
+
             }
         });
-        
-        for(StudentOfTestSpringMVC stu : studentList)
+
+        for (StudentOfTestSpringMVC stu : studentList)
         {
             System.out.println("stu" + stu);
         }
     }
+
     /**
-     * 经常使用,推荐
+     * 查找一条，经常使用,推荐
      */
     @Test
     public void handle18()
     {
         final String sql = "select * from tb_StudentOfTestSpringMVC where id=?";
-        final List<StudentOfTestSpringMVC> studentList = new ArrayList<StudentOfTestSpringMVC>(1);
-        
+        final List<StudentOfTestSpringMVC> studentList = new ArrayList<StudentOfTestSpringMVC>(
+                1);
+
         jdbcTemplate.query(sql, new RowCallbackHandler()
         {
-            
+
             @Override
             public void processRow(ResultSet rs) throws SQLException
             {
@@ -181,44 +210,24 @@ public class TempletTest
                 student.setId(rs.getLong("id"));
                 student.setName(rs.getString("name"));
                 student.setGender(rs.getString("gender"));
-                student.setAge(rs.getInt("age"));
-                System.out.println("sutdent : "+student);
+                // student.setAge(rs.getInt("age"));
+                System.out.println("sutdent : " + student);
             }
         }, 8);
-                
+
     }
+
     /**
-     * 经常用,推荐
+     * 按条件查找，经常用,推荐
      */
     @Test
     public void handle19()
     {
         final String sql = "select * from tb_StudentOfTestSpringMVC where id > ?";
-        final List<StudentOfTestSpringMVC> studentList = new ArrayList<StudentOfTestSpringMVC>(1);
-        jdbcTemplate.query(sql, new Object[]{0},new RowCallbackHandler()
+        final List<StudentOfTestSpringMVC> studentList = new ArrayList<StudentOfTestSpringMVC>(
+                1);
+        jdbcTemplate.query(sql, new Object[] { 0 }, new RowCallbackHandler()
         {
-            
-            @Override
-            public void processRow(ResultSet rs) throws SQLException
-            {
-                StudentOfTestSpringMVC stu = new StudentOfTestSpringMVC();
-                stu.setName(rs.getString("name"));
-                studentList.add(stu);
-                
-            }
-        });
-        for(StudentOfTestSpringMVC s : studentList)
-        {
-            System.out.println(s);
-        }
-    }
-    
-    @Test
-    public void handle20()
-    {
-        final String sql = "select * from tb_StudentOfTestSpringMVC where id > ?";
-        final List<StudentOfTestSpringMVC> studentList = new ArrayList<StudentOfTestSpringMVC>(1);
-        jdbcTemplate.query(sql, new RowCallbackHandler(){
 
             @Override
             public void processRow(ResultSet rs) throws SQLException
@@ -226,86 +235,44 @@ public class TempletTest
                 StudentOfTestSpringMVC stu = new StudentOfTestSpringMVC();
                 stu.setName(rs.getString("name"));
                 studentList.add(stu);
-                
-            }}, 1);
-        for(StudentOfTestSpringMVC s : studentList)
+
+            }
+        });
+        for (StudentOfTestSpringMVC s : studentList)
         {
             System.out.println(s);
         }
     }
-    
+
+    @Test
+    public void handle20()
+    {
+        final String sql = "select * from tb_StudentOfTestSpringMVC where id > ?";
+        final List<StudentOfTestSpringMVC> studentList = new ArrayList<StudentOfTestSpringMVC>(
+                1);
+        jdbcTemplate.query(sql, new RowCallbackHandler()
+        {
+
+            @Override
+            public void processRow(ResultSet rs) throws SQLException
+            {
+                StudentOfTestSpringMVC stu = new StudentOfTestSpringMVC();
+                stu.setName(rs.getString("name"));
+                studentList.add(stu);
+
+            }
+        }, 1);
+        for (StudentOfTestSpringMVC s : studentList)
+        {
+            System.out.println(s);
+        }
+    }
+
     /**
      * RowMapper--100万集合中,--在发送
      */
     public void handle22()
     {
-        
+
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

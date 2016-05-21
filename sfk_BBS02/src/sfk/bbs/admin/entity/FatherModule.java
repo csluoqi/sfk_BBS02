@@ -9,7 +9,7 @@ package sfk.bbs.admin.entity;
 public class FatherModule
 {
     private Long id;
-    private String moduelName;
+    private String moduleName;
     private int sort;
 
     public FatherModule()
@@ -17,11 +17,11 @@ public class FatherModule
         super();
     }
 
-    public FatherModule(Long id, String moduelName, int sort)
+    public FatherModule(Long id, String moduleName, int sort)
     {
         super();
         this.id = id;
-        this.moduelName = moduelName;
+        this.moduleName = moduleName;
         this.sort = sort;
     }
 
@@ -35,14 +35,14 @@ public class FatherModule
         this.id = id;
     }
 
-    public String getModuelName()
+    public String getModuleName()
     {
-        return moduelName;
+        return moduleName;
     }
 
-    public void setModuelName(String moduelName)
+    public void setModuleName(String moduelName)
     {
-        this.moduelName = moduelName;
+        this.moduleName = moduelName;
     }
 
     public int getSort()
@@ -58,8 +58,7 @@ public class FatherModule
     @Override
     public String toString()
     {
-        return "FatherModule [id=" + id + ", moduelName=" + moduelName
+        return "FatherModule [id=" + id + ", moduelName=" + moduleName
                 + ", sort=" + sort + "]";
     }
-
 }

@@ -9,13 +9,14 @@
 	<jsp:include page="../common/adminNavBar.jsp"/>
 
 	<div id="main" style="height: 1000px;">
-		<div class="title" style="margin-bottom:20px">添加父板块</div>
+		<div class="title" style="margin-bottom:20px">编辑父板块</div>
 		
-		<form:form id="newFatherModule" commandName="fatherModule" action="${basePath}saveFatherModule" method="POST">
+		<form:form id="newFatherModule" commandName="fatherModule" action="${basePath}updateFatherModule" method="POST">
 			<table class="au">
 				<tr>
 					<td>版块名称</td>
 					<td><form:input  path="moduleName"/></td>
+					<form:input type="hidden" path="id"/>
 				</tr>
 				<tr>
 					<td>排序</td>
@@ -23,10 +24,9 @@
 				</tr>
 			</table>
 			<input class="btn" style="cursor: pointer; margin-top: 10px"
-				type="submit" name="submit" value="添加">
+				type="submit" name="submit" value="修改">
 		</form:form>
 	</div>
 	
- 
 </body>
 </html>
