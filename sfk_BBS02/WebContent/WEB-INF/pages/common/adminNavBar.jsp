@@ -35,6 +35,8 @@
 				<!--从下面可以发现java脚本功能是非常强大的  -->
 				<li><a <% if(servletPath.contains("adminIndex")){ %> class="current"<%} %> href="<%=projectPath %>adminIndex">父板块列表</a></li>
 				<li><a <% if(servletPath.contains("newFatherModule")){ %> class="current"<%} %> href="<%=projectPath%>newFatherModule">添加父板块</a></li>
+				<%--如果是更改父版块，则出现一个不能点击的显示标签 --%>
+				<% if(servletPath.contains("updateFatherModule")){ %><li><a class="current">编辑父版块</a></li> <%} %>
 				<li><a href="#">子板块列表</a></li>
 				<li><a href="#">添加子板块</a></li>
 				<li><a href="#">帖子管理</a></li>

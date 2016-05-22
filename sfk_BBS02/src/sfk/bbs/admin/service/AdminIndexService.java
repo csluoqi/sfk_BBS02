@@ -3,6 +3,7 @@ package sfk.bbs.admin.service;
 import java.util.List;
 
 import sfk.bbs.admin.entity.FatherModule;
+import sfk.bbs.admin.entity.SonModule;
 /**
  * 后台管理页面的service方法
  * @author rocky
@@ -27,5 +28,25 @@ public interface AdminIndexService
      * @return true 添加成功, false 添加失败
      */
     boolean saveFatherModule(FatherModule fatherModule);
+
+    /**
+     * 通过Id获取一个父版块对象
+     * @param id 父版块id
+     * @return 父版块对象
+     */
+    FatherModule getFatherModuelById(long id);
+    
+    /**
+     * 更新父版块
+     * @param fatherModule 父版块对象
+     * @return true，更新成功，false，更新失败
+     */
+    boolean updateFatherModuel(FatherModule fatherModule);
+    
+    boolean saveSonModule(SonModule sonModule);
+/*    
+    boolean checkAddReduplicateData();
+    
+    boolean checkUpdateReduplicateData();*/
     
 }

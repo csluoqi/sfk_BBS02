@@ -1,0 +1,12 @@
+/*有了这个error class 这个就会就会默认加到input和错误提示的标签上*/
+	.error {
+		background: url('small.png') no-repeat -20px -40px;
+		padding-left:  20px;
+		margin-left:    20px;
+		
+	}
+	.ok{
+		background: url('small.png') no-repeat -40px -20px;
+		padding-left:  20px;
+		margin-left:    20px;
+	}

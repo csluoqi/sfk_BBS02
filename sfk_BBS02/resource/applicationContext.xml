@@ -38,7 +38,7 @@
     
 	<!-- 这个的作用是让DispatcherServlet不将下列路径理解为一个request请求,
     在项目中,这个是必须的,如果没有加这些就可能造成上述问题 -->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven conversion-service="conversionService"/>
     <!-- <mvc:resources mapping="/css/**" location="/css/"/>
     <mvc:resources mapping="/js/**" location="/js/"/> -->
     <mvc:resources mapping="/style/**" location="/style/"/>
@@ -54,7 +54,18 @@
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate" >
      	<property name="dataSource" ref="dataSource"/>  
     </bean>
-    
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+    	<property name="formatterRegistrars">
+    		<set>
+    			<bean class="sfk.bbs.admin.formatter.sfkbbsFormatterRegistrar">
+    				<constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
+    			</bean>
+    		</set>
+    	</property>
+    </bean>
+    <bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    	<property name="basename" value="classpath:messages.properties" />
+    </bean>
     <!-- 读取配置文件信息,在Spring的配置文件中使用EL表达式填充值 -->
     <context:property-placeholder location="classpath:jdbc.properties"/>
     <!-- 配置数据库连接池 -->
@@ -84,7 +95,7 @@
 <!-- <property name="idleConnectionTestPeriod" value="${jdbc.idleConnectionTestPeriod}"/> -->
 </bean>
     
-    
+  
     
     <!-- <bean id="dataSourceLocal" name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
     	制定连接数据库的驱动
