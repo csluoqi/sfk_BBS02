@@ -9,7 +9,7 @@ package sfk.bbs.common.constance;
  * (其实也可一用Page，但是觉得Go比较简单所以就默认用Go了)结尾
  * @author rocky
  */
-public final class ActionURL
+public   interface ActionURL
 {
     /**测试Spring框架-- 显示学生的请求链接**/
     public final static String STUDENT_LIST = "/studentList";
@@ -32,4 +32,6 @@ public final class ActionURL
     public final static String NEW_SON_MODULE_GO = "/newSonModuleGo";
     /**新增子版块**/
     public final static String NEW_SON_MODULE = "/newSonModule";
+    /**子版块列表**/
+    public final static String SON_MODULE_LIST  = "/sonModuleList";
 }

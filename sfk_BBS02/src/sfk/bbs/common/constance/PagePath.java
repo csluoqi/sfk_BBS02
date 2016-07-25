@@ -7,7 +7,7 @@ package sfk.bbs.common.constance;
  * 3.这个类中明明规则是,全部大写,单词之间用下划线连接
  * @author rocky
  */
-public final class PagePath
+public interface PagePath
 {   
     /**测试Spring框--显示学生列表的页面***/
     public final static String STUDENT_LIST = "testPage/studentList";
@@ -23,5 +23,6 @@ public final class PagePath
     
     /**新增子版块newSonModule**/
     public final static String NEW_SON_MODULE = "admin/newSonModule";
-    
+    /**子版块列表页面sonModuleList**/
+    public final static String SON_MODULE_LIST = "admin/sonModuleList";
 }

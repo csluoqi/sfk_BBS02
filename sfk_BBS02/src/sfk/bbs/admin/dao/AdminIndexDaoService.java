@@ -50,4 +50,9 @@ public interface AdminIndexDaoService
      */
     boolean saveSonModule(SonModule sonModule);
     
+    /**
+     * 查找所有的子版块
+     * @return 子版块对象的集合
+     */
+    List<SonModule> findAllSonModules();
 }

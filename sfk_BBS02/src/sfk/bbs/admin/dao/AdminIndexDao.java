@@ -132,4 +132,33 @@ public class AdminIndexDao implements AdminIndexDaoService
         return false;
     }
 
+    @Override
+    public List<SonModule> findAllSonModules()
+    {
+        /**
+         * 这里要将父版块的信息和子版块的信息一起查到 select t.id, t.module_name, t.info,
+         * t.member_id, t.sort, t2.id as fatherModuleId, t2.module_name from
+         * sfk_son_module as t left join sfk_father_module as t2 ON
+         * t.father_module_id = t2.id;
+         * 
+         */
+        String sql = "select  t.id, t.module_name,   t.info,   t.member_id, t.sort,  "
+                + "t2.id as fatherModuleId,  t2.module_name from  sfk_son_module as t   "
+                + "left join sfk_father_module as t2 ON t.father_module_id = t2.id;";
+        List<SonModule> sonModules = new ArrayList<SonModule>(10);
+        
+        jdbc.query(sql, new RowCallbackHandler(){
+
+            @Override
+            public void processRow(ResultSet arg0) throws SQLException
+            {
+                //TODO这个方法内部时如何实现的
+                
+            }
+            
+        });
+        
+        return null;
+    }
+
 }
