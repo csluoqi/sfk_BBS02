@@ -69,5 +69,12 @@ public class AdminIndexServiceImpl implements AdminIndexService
         sonModule.setFatherModule(fatherModule);
         return adminIndexDao.saveSonModule(sonModule);
     }
+    @Override
+    public List<SonModule> findAllSonModules()
+    {
+        //adminIndexDao.fin
+        return null;
+    }
+
     
 }

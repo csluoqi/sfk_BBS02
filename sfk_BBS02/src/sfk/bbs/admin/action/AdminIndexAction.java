@@ -132,13 +132,14 @@ public class AdminIndexAction
             return "redirect:" + ActionURL.ADMIN_INDEX;
         } else
         {
+            //这里应该将错误原因反馈到页面的
             log.error("新增失败");
             model.addAttribute("fatherModule", fatherModule);
             return PagePath.UPDATE_FATHER_MODULE;
         }
     }
 
-    @RequestMapping(value = ActionURL.NEW_SON_MODULE_GO)
+    @RequestMapping(value = ActionURL.NEW_SON_MODULE_GO,method=RequestMethod.GET)
     public String newSonModule(Model model)
     {
         List<FatherModule> fatherModuleList = adminIndexService
@@ -155,7 +156,19 @@ public class AdminIndexAction
         //如果保存成功了怎么办，如果保存失败了怎么班
         adminIndexService.saveSonModule(sonModule);
         log.info("saveSonModule");
-        
+        //保存成功了跳转到子版块列表
+        //失败了返回原录入页面
         return PagePath.ADMIN_INDEX;
+    }
+    
+    @RequestMapping(value = ActionURL.SON_MODULE_LIST,method = RequestMethod.GET)
+    public String sonModuleList(Model model)
+    {
+       // List<SonModule> sonModuleList = adminIndexService.fin
+        
+        List<FatherModule> fatherModules = adminIndexService
+                .findAllFatherModule();
+        model.addAttribute("fatherModules", fatherModules);
+        return PagePath.SON_MODULE_LIST;
     }
 }

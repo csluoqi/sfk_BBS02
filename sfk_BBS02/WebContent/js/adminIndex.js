@@ -11,7 +11,7 @@ $(function(){
     //alert(123);
     $("#newFatherModule").validate({
         submitHandler:function(){
-            alert("恭喜你验证成功"+$("#fatherModule.id").val());
+            alert("恭喜你验证成功"+$("#moduleName").val());
             return true;
         },
         invalidHandler:function(event,validator){
