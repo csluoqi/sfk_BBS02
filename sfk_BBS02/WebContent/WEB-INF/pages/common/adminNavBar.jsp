@@ -38,7 +38,8 @@
 				<%--如果是更改父版块，则出现一个不能点击的显示标签 --%>
 				<% if(servletPath.contains("updateFatherModule")){ %><li><a class="current">编辑父版块</a></li> <%} %>
 				<li><a href="#">子板块列表</a></li>
-				<li><a href="#">添加子板块</a></li>
+				<!--/newSonModuleGo"  -->
+				<li><a <% if(servletPath.contains("newSonModuleGo")){ %> class="current"<%} %> href="<%=projectPath%>newSonModuleGo">添加子板块</a></li>
 				<li><a href="#">帖子管理</a></li>
 			</ul>
 		</li>
