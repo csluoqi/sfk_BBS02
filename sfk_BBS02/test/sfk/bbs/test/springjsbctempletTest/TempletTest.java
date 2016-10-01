@@ -273,6 +273,6 @@ public class TempletTest
      */
     public void handle22()
     {
-
+        System.out.println("testEnvironment");
     }
 }
