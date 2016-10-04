@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import sfk.bbs.admin.action.AdminIndexAction;
 import sfk.bbs.admin.entity.FatherModule;
+import sfk.bbs.admin.entity.SonModule;
 import sfk.bbs.admin.service.AdminIndexService;
 import sfk.bbs.common.constance.ActionURL;
 import sfk.bbs.common.constance.PagePath;
@@ -42,5 +43,18 @@ public class AdminIndexRest
         log.info("Delete Successfully!");
         //if()
         return new ResponseEntity<Boolean>(adminIndexService.deleteFatherModule(id),HttpStatus.OK);
+    }
+    /**
+     * 删除一个子版块
+     * @param id
+     * @return true 删除成功, false 删除失败
+     */
+    @RequestMapping(value="/deleteSonModule/{id}", method=RequestMethod.DELETE)
+    public ResponseEntity<Boolean> deleteSonModule(@PathVariable("id") Long id)
+    {
+        log.info("Delete Successfully!");
+        SonModule sonModule = new SonModule();
+        sonModule.setId(id);
+        return new ResponseEntity<Boolean>(adminIndexService.deleteSonModule(sonModule),HttpStatus.OK);
     }
 }

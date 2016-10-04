@@ -2,6 +2,8 @@ package sfk.bbs.admin.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import sfk.bbs.admin.entity.FatherModule;
 import sfk.bbs.admin.entity.SonModule;
 /**
@@ -55,9 +57,41 @@ public interface AdminIndexService
      * @return 子版块对象的集合
      */
     List<SonModule> findAllSonModules();
-/*    
-    boolean checkAddReduplicateData();
+    /**
+     * @param sonModule 子版块对象
+     * @return true, 删除成功，false，删除失败
+     */
+    boolean deleteSonModule(SonModule sonModule);
+    /**
+     * @param sonModule 子版块对象
+     * @return true,更新成功，false，更新失败
+     */
+    boolean updateSonModule(SonModule sonModule);
+    /**
+     * 获取子版块
+     * @param id 子版块id
+     * @return 子版块对象
+     */
+    SonModule getSonModuelById(long id);
+    /**
+     * 处理前台传来的数据
+     * @param request request
+     * @return 父版块集合
+     */
+    List<FatherModule> processParmeters(HttpServletRequest request);
     
-    boolean checkUpdateReduplicateData();*/
+    List<SonModule> processParmetersForSonModule(HttpServletRequest request);
+    /**
+     * 
+     * @param fatherModules 父版块集合（包含Id和sout）
+     * @return 错误信息，没有错误信息时为null
+     */
+    String sortFatherModule(List<FatherModule> fatherModules);
     
+    /**
+     * @param fatherModules  子版块集合（包含Id和sout）
+     * @return 错误信息，没有错误信息时为null
+     */
+    String sortSonModule(List<SonModule> sonModules);
 }
+

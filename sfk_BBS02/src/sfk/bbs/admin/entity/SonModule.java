@@ -7,7 +7,7 @@ public class SonModule
     private String moduleName;
     private String info;
     private Long memberId;
-    private int sort;
+    private long sort;
 
     public SonModule()
     {
@@ -64,12 +64,12 @@ public class SonModule
         this.memberId = memberId;
     }
 
-    public int getSort()
+    public long getSort()
     {
         return sort;
     }
 
-    public void setSort(int sort)
+    public void setSort(long sort)
     {
         this.sort = sort;
     }

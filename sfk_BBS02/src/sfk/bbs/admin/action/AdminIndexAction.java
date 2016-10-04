@@ -1,6 +1,8 @@
 package sfk.bbs.admin.action;
 
-import java.util.ArrayList;
+import java.lang.ProcessBuilder.Redirect;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,13 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.util.HtmlUtils;
 
 import sfk.bbs.admin.entity.FatherModule;
 import sfk.bbs.admin.entity.SonModule;
 import sfk.bbs.admin.service.AdminIndexService;
-import sfk.bbs.common.constance.ActionURL;
-import sfk.bbs.common.constance.PagePath;
 
 /**
  * 后台管理页面
@@ -45,7 +44,7 @@ public class AdminIndexAction
      *            model
      * @return 页面连接
      */
-    @RequestMapping(value = ActionURL.ADMIN_INDEX, method = RequestMethod.GET)
+    @RequestMapping(value =  "/adminIndex", method = RequestMethod.GET)
     public String showAdminIndex(HttpServletRequest request,
             HttpServletResponse response, Model model)
     {
@@ -54,7 +53,7 @@ public class AdminIndexAction
         model.addAttribute("fatherModules", fatherModules);
         // log.info(fatherModules);
         // log.info("request.getCharacterEncoding() : "+request.getCharacterEncoding());
-        return PagePath.ADMIN_INDEX;
+        return "admin/adminIndex";
     }
 
     /**
@@ -68,12 +67,12 @@ public class AdminIndexAction
      *            model
      * @return 父板块的链接
      */
-    @RequestMapping(value = ActionURL.NEW_FATHER_MODULE, method = RequestMethod.GET)
+    @RequestMapping(value = "/newFatherModule", method = RequestMethod.GET)
     public String inputNewFatherModule(HttpServletRequest request,
             HttpServletResponse response, Model model)
     {
         model.addAttribute("fatherModule", new FatherModule());
-        return PagePath.NEW_FATHER_MODULE;
+        return "admin/newFatherModule";
     }
 
     /**
@@ -82,12 +81,12 @@ public class AdminIndexAction
      * 
      * @return 重定向到显示父板块列表的页面
      */
-    @RequestMapping(value = ActionURL.SAVE_FATHER_MODULE, method = RequestMethod.POST)
+    @RequestMapping(value =  "/saveFatherModule", method = RequestMethod.POST)
     public String saveFatherModule(FatherModule fatherModule)
     {
         // 这里应该设置if条件，如果成功了跳转到哪里，失败了跳转到哪里
         adminIndexService.saveFatherModule(fatherModule);
-        return "redirect:" + ActionURL.ADMIN_INDEX;
+        return "redirect:" + "/adminIndex";
     }
 
     /***
@@ -99,7 +98,7 @@ public class AdminIndexAction
      *            model
      * @return 编辑父版块的页面
      */
-    @RequestMapping(value = ActionURL.UPDATE_FATHER_MODULE_GO + "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value =  "/updateFatherModuleGo" + "/{id}", method = RequestMethod.GET)
     public String updateFatherModuleGo(@PathVariable("id") long id, Model model)
     {
         // 因为这里用的是get方式，所以用户可以自己输入
@@ -107,7 +106,7 @@ public class AdminIndexAction
         // 最好可以定时跳转到bbs
         model.addAttribute("fatherModule",
                 adminIndexService.getFatherModuelById(id));
-        return PagePath.UPDATE_FATHER_MODULE;
+        return "admin/updateFatherModule";
     }
 
     // 之后跳转到首页（因为在前端已经做了验证了不会出现异常，如果出现异常的情况不考虑）
@@ -120,7 +119,7 @@ public class AdminIndexAction
      *            model
      * @return 更新成功则跳转到父版块列表，反正，返回更新的页面
      */
-    @RequestMapping(value = ActionURL.UPDATE_FATHER_MODULE)
+    @RequestMapping(value =  "/updateFatherModule")
     public String updateFatherModule(FatherModule fatherModule, Model model)
     {
         // 视频里讲到了更新操作，和新增操作是对数据进行查重，但是查重逻辑是存在问题的
@@ -129,46 +128,141 @@ public class AdminIndexAction
                 .updateFatherModuel(fatherModule);
         if (updateSuccess)
         {
-            return "redirect:" + ActionURL.ADMIN_INDEX;
+            return "redirect:" +  "/adminIndex";
         } else
         {
             //这里应该将错误原因反馈到页面的
             log.error("新增失败");
             model.addAttribute("fatherModule", fatherModule);
-            return PagePath.UPDATE_FATHER_MODULE;
+            return "admin/updateFatherModule";
         }
     }
 
-    @RequestMapping(value = ActionURL.NEW_SON_MODULE_GO,method=RequestMethod.GET)
+    @RequestMapping(value =  "/newSonModuleGo",method=RequestMethod.GET)
     public String newSonModule(Model model)
     {
         List<FatherModule> fatherModuleList = adminIndexService
                 .findAllFatherModule();
         model.addAttribute("fatherModule", fatherModuleList);
         model.addAttribute("sonModule", new SonModule());
-        return PagePath.NEW_SON_MODULE;
+        return "admin/newSonModule";
     }
 
-    @RequestMapping(value = ActionURL.NEW_SON_MODULE)
-    public String saveSonModule(SonModule sonModule)
+    @RequestMapping(value =  "/newSonModule")
+    public String saveSonModule(SonModule sonModule,Model model)
     {
         // save sonModule 会员这里必须输入数字，在前台要改 待续。。。
-        //如果保存成功了怎么办，如果保存失败了怎么班
-        adminIndexService.saveSonModule(sonModule);
-        log.info("saveSonModule");
-        //保存成功了跳转到子版块列表
-        //失败了返回原录入页面
-        return PagePath.ADMIN_INDEX;
+        //如果保存成功了怎么办，如果保存失败了怎么办
+        if(adminIndexService.saveSonModule(sonModule))
+        {
+            log.info("saveSonModule");
+            //保存成功了跳转到子版块列表
+            return "redirect:"+ "/sonModuleList";    
+        }
+        else
+        {
+            //失败了返回原录入页面
+            //未测试，1.因为在前端已经用js验证过了，所以这里一般不会出错
+            //       2.这里用了spring的表单对象，如果这里的表单数据转换为表单对象时出错，
+            //那么直接在页面报400，在进入action之前就出错了，
+            //对应的策略有两个，1，不用表单对象用request获取，2，给予spring的表单对象进行定制，
+            //
+            
+            model.addAttribute("sonModule",sonModule);
+            return "/newSonModuleGo";
+        }
     }
     
-    @RequestMapping(value = ActionURL.SON_MODULE_LIST,method = RequestMethod.GET)
+    @RequestMapping(value = "/sonModuleList",method = RequestMethod.GET)
     public String sonModuleList(Model model)
     {
-       // List<SonModule> sonModuleList = adminIndexService.fin
+        List<SonModule> sonModuleList = adminIndexService.findAllSonModules();
         
-        List<FatherModule> fatherModules = adminIndexService
-                .findAllFatherModule();
-        model.addAttribute("fatherModules", fatherModules);
-        return PagePath.SON_MODULE_LIST;
+        /*List<FatherModule> fatherModules = adminIndexService
+                .findAllFatherModule();*/
+        model.addAttribute("sonModuleList", sonModuleList);
+        return "admin/sonModuleList";
     }
+    //TODO 尝试将restcontroller的方法写在controller这个地方 结果：失败！ js也要按照删除父版块的方法写，
+    //已经将代码转移到rest下面去了
+    
+    /**
+     * 更新子版块的链接
+     * @param id 子版块Id
+     * @param model model
+     * @return 更新子版块的页面 
+     */
+    @RequestMapping(value =  "/updateSonModuleGo" + "/{id}", method = RequestMethod.GET)
+    public String updateSonModuleGo(@PathVariable("id") long id, Model model)
+    {
+        model.addAttribute("fatherModule", adminIndexService
+                .findAllFatherModule());
+        model.addAttribute("sonModule",
+                adminIndexService.getSonModuelById(id));
+        return "admin/updateSonModule";
+    }
+    
+    /**
+     * 处理更新子版块
+     * @param sonModule 子版块
+     * @param model model
+     * @return 跳转到子版块列表链接
+     */
+    @RequestMapping(value="/updateSonModule",method=RequestMethod.POST)
+    public String updateSonModule(SonModule sonModule,Model model)
+    {
+        //更新成功之后返回更新页面，
+        //更新失败之后返回更新页面
+        if(adminIndexService.updateSonModule(sonModule))
+        {
+          return "redirect:"+"/sonModuleList";
+        }
+        return "redirect:"+"/updateSonModuleGo/"+sonModule.getId();
+    }
+    
+    /**
+     * 父版块排序
+     * @param request HttpServletRequest
+     * @param model model
+     * @return 父版块列表
+     */
+    @RequestMapping(value="/sortFatherModule",method = RequestMethod.POST)
+    public String sortFatherModule(HttpServletRequest request, Model model)
+    {   //将request传到下层，然后返回action中需要的数据
+        //获取数据
+        List<FatherModule> fatherModules = adminIndexService.processParmeters(request);
+        if(fatherModules==null)
+        {
+            return "redirect:"+"/adminIndex";
+        }
+        //数据库处理返回结果
+        log.info(fatherModules);
+        //返回结果 在页面的顶部设置错误（来源于底层）提示区域
+        String errorInfo = adminIndexService.sortFatherModule(fatherModules);
+        log.info(errorInfo);
+        return "redirect:"+"/adminIndex";
+    }
+    
+    /**
+     * 子版块排序
+     * @param request HttpServletRequest
+     * @param model model
+     * @return 子版块列表
+     */
+    @RequestMapping(value="/sortSonModule",method = RequestMethod.POST)
+    public String sortSonModule(HttpServletRequest request, Model model)
+    {   //将request传到下层，然后返回action中需要的数据
+        //获取数据
+        List<SonModule> sonModules = adminIndexService.processParmetersForSonModule(request);
+        if(sonModules==null)
+        {
+            return "redirect:"+"/sonModuleList";
+        }
+        //数据库处理返回结果
+        log.info(sonModules);
+        //返回结果 在页面的顶部设置错误（来源于底层）提示区域
+        String errorInfo = adminIndexService.sortSonModule(sonModules);
+        log.info(errorInfo);
+        return "redirect:"+"/sonModuleList";
+    }    
 }

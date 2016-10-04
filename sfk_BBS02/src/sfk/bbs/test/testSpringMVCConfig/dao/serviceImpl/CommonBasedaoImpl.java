@@ -10,7 +10,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
-import sfk.bbs.common.constance.CommonParams;
+import sfk.bbs.common.constance.DbStatus;
 import sfk.bbs.common.databaseUtil.DataBaseHelper;
 import sfk.bbs.test.testSpringMVCConfig.dao.service.commonBaseDao;
 
@@ -84,7 +84,7 @@ public class CommonBasedaoImpl implements commonBaseDao
                 }
             }
             affectRow = pstm.executeUpdate();
-            if (affectRow > CommonParams.NO_AFFECT_ROW)
+            if (affectRow > DbStatus.NO_AFFECT_ROW)
             {
                 return true;
             }

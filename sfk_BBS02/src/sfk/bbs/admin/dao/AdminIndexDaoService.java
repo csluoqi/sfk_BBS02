@@ -1,5 +1,6 @@
 package sfk.bbs.admin.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import sfk.bbs.admin.entity.FatherModule;
@@ -34,14 +35,14 @@ public interface AdminIndexDaoService
      * @param id 父版块id
      * @return 父版块对象
      */
-    FatherModule getFatherModuelById(long id);
+    FatherModule getFatherModuleById(long id);
     
     /**
      * 更新父版块
      * @param fatherModule 父版块对象
      * @return true，更新成功，false，更新失败
      */
-    boolean updateFatherModuel(FatherModule fatherModule);
+    boolean updateFatherModule(FatherModule fatherModule);
     
     /**
      * 保存子版块列表
@@ -55,4 +56,42 @@ public interface AdminIndexDaoService
      * @return 子版块对象的集合
      */
     List<SonModule> findAllSonModules();
+    /**
+     * 
+     * @param sonModule 子版块对象
+     * @return true, 删除成功，false，删除失败
+     */
+    boolean deleteSonModule(SonModule sonModule);
+    /**
+     * 
+     * @param sonModule 子版块对象
+     * @return true,更新成功，false，更新失败
+     */
+    boolean updateSonModule(SonModule sonModule);
+    /**
+     * 
+     * @param id 子版块ID
+     * @return 子版块
+     */
+    SonModule getSonModuleById(long id);
+    
+    /**
+     * 统计父版块下面子版块的个数
+     * @param id 父版块Id
+     * @return 父版块下面子版块的个数
+     */
+    //int getSonModuleCountByfatherModuleId(long id);
+    
+    /***
+     * 父版块 排序
+     * @param fatherModules
+     * @return null表示没有错误，反之为错误信息
+     */
+    String sortFatherModule(List<FatherModule> fatherModules);
+    /**
+     * 子版块排序
+     * @param sonModules 子版块集合
+     * @return null表示没有错误，反之为错误信息
+     */
+    String sortSonModule(List<SonModule> sonModules);
 }

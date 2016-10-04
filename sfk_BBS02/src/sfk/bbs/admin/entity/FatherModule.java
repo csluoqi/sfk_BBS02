@@ -8,7 +8,7 @@ package sfk.bbs.admin.entity;
  */
 public class FatherModule
 {
-    private Long id;
+    private long id;
     private String moduleName;
     private int sort;
 
@@ -30,7 +30,7 @@ public class FatherModule
         return id;
     }
 
-    public void setId(Long id)
+    public void setId(long id)
     {
         this.id = id;
     }

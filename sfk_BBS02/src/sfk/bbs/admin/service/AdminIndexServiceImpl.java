@@ -1,6 +1,11 @@
 package sfk.bbs.admin.service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +35,9 @@ public class AdminIndexServiceImpl implements AdminIndexService
     @Override
     public Boolean deleteFatherModule(Long id)
     {
-        // TODO Auto-generated method stub
+        //判断是否有子版块，有子版块则不能删除，
+        
+        
         return adminIndexDao.deleteFatherModule(id);
     }
     @Override
@@ -53,13 +60,13 @@ public class AdminIndexServiceImpl implements AdminIndexService
     public FatherModule getFatherModuelById(long id)
     {
     
-        return adminIndexDao.getFatherModuelById(id);
+        return adminIndexDao.getFatherModuleById(id);
     }
     @Override
     public boolean updateFatherModuel(FatherModule fatherModule)
     {
         // TODO Auto-generated method stub
-        return adminIndexDao.updateFatherModuel(fatherModule);
+        return adminIndexDao.updateFatherModule(fatherModule);
     }
     @Override
     public boolean saveSonModule(SonModule sonModule)
@@ -72,9 +79,108 @@ public class AdminIndexServiceImpl implements AdminIndexService
     @Override
     public List<SonModule> findAllSonModules()
     {
-        //adminIndexDao.fin
-        return null;
+        return adminIndexDao.findAllSonModules();
     }
+    @Override
+    public boolean deleteSonModule(SonModule sonModule)
+    {
+        
+        return adminIndexDao.deleteSonModule(sonModule);
+    }
+    @Override
+    public boolean updateSonModule(SonModule sonModule)
+    {
+        return adminIndexDao.updateSonModule(sonModule);
+    }
+    @Override
+    public SonModule getSonModuelById(long id)
+    {
+        return adminIndexDao.getSonModuleById(id);
+    }
+    @Override
+    public List<FatherModule> processParmeters(HttpServletRequest request) 
+    {
+        Enumeration<String> sorts = request.getParameterNames();
+        //sorts.
+        List<FatherModule> fatherModules = new ArrayList<FatherModule>(10);
+        FatherModule fatherModule = null;
+        String sortTemp = null;
+        
+        
+            try
+            {
+                while(sorts.hasMoreElements())
+                {
+                    
+                    fatherModule = new FatherModule();
+                    sortTemp = sorts.nextElement();
+                    if("submit".equals(sortTemp))
+                    {
+                        continue;
+                    }
+                    log.info(sortTemp);
+                    fatherModule.setId(Long.parseLong(sortTemp.split("_")[1]));//"_"是在jsp中设置的
+                    fatherModule.setSort(Integer.parseInt(request.getParameter(sortTemp)));
+                    fatherModules.add(fatherModule);
+                }
+            } catch (NumberFormatException e)
+            {
+                log.error(e.getMessage());
+                return null;
+            }
+        
 
+        return fatherModules;
+    }
+    
+    
+    @Override
+    public List<SonModule> processParmetersForSonModule(
+            HttpServletRequest request)
+    {
+        Enumeration<String> sorts = request.getParameterNames();
+        //sorts.
+        List<SonModule> sonModules = new ArrayList<SonModule>(10);
+        SonModule sonModule = null;
+        String sortTemp = null;
+        
+        
+            try
+            {
+                while(sorts.hasMoreElements())
+                {
+                    
+                    sonModule = new SonModule();
+                    sortTemp = sorts.nextElement();
+                    if("submit".equals(sortTemp))
+                    {
+                        continue;
+                    }
+                    log.info(sortTemp);
+                    sonModule.setId(Long.parseLong(sortTemp.split("_")[1]));//"_"是在jsp中设置的
+                    sonModule.setSort(Integer.parseInt(request.getParameter(sortTemp)));
+                    sonModules.add(sonModule);
+                }
+            } catch (NumberFormatException e)
+            {
+                log.error(e.getMessage());
+                return null;
+            }
+        return sonModules;
+    }
+    @Override
+    public String sortFatherModule(List<FatherModule> fatherModules)
+    {
+        // TODO Auto-generated method stub
+        return adminIndexDao.sortFatherModule(fatherModules);
+    }
+    @Override
+    public String sortSonModule(List<SonModule> sonModules)
+    {
+        
+        return adminIndexDao.sortSonModule(sonModules);
+    }
+    
+    
     
 }
