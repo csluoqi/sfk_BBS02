@@ -80,6 +80,11 @@ $(function(){
                     required:true,
                     maxlength:50
                 },
+            info:
+            	{
+                required:false,
+                maxlength:250
+            	},
                 memberId:
                 {
                     //这个必须填，且是数字，因为这个Spring表单对象要求的，因为项目中没有自定转换器和格式化器
@@ -107,8 +112,11 @@ $(function(){
                 memberId:
                 {
                     required:"会员Id是必填的",
-                    max:"会员Id值必须在0-10000以内",
-                    min:"会员Id值必须在0-10000以内"
+                    max:"会员Id值必须在0-10000字符以内",
+                    min:"会员Id值必须在0-10000字符以内"
+                },
+                info:{
+                	maxlength:"描述信息必须在0-250个字符以内"	
                 },
                 sort:
                 {
@@ -180,4 +188,49 @@ function DeleteFatherModule(moduleId, title)
                 }
             });
 }
-
+/**
+ * 删除一个子版块
+ * @param id 子版块Id
+ * @param title 子版块的名字
+ */
+function deleteSonModule(id,title)
+{
+	var confirmDel = confirm("确定删除子版块 "+'"'+title+'"'+"吗？");
+	var $thisTr = $("#sonModule_"+id);
+	
+	
+	if(!confirmDel)
+		{
+		return false;
+		}
+	//标记开始删除，因为这里合并三个td就够了，所以这里就就合并了三个td
+	$thisTr.html(
+    "<td colspan='3'><span style='color:red'>删除操作中...</span></td>");
+	//ajax 请求删除
+	$.ajax({
+		
+		type:'DELETE',
+		dataType:'json',
+		contentType : 'application/json;charset=utf-8',
+		url:"/sfk_BBS02/rest/deleteSonModule/"+id,
+		success:function(isSuccess){
+			if(isSuccess)
+			{
+				$thisTr.html(
+			    "<td colspan='3'><span style='color:red'>删除成功！</span></td>");
+			}
+			else
+			{
+				$thisTr.html(
+			    "<td colspan='3'><span style='color:red'>删除失败！</span></td>");
+			}
+		},
+		error:function(){$thisTr.html(
+	    "<td colspan='3'><span style='color:red'>服务器端异常，删除失败！</span></td>");}
+	});
+	
+	/*
+	console.log("atfer has return atfer has return atfer has return");
+	return ;
+	*/
+}

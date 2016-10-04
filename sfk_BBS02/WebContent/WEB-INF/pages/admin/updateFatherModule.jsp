@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <%@include file="../common/adminHeader.jsp"%>
 <c:set value="<%=projectPath %>" var="basePath"/>
 <body>
@@ -10,7 +10,7 @@
 
 	<div id="main" style="height: 1000px;">
 		<div class="title" style="margin-bottom:20px">编辑父板块</div>
-		
+		<%--这里新增和更新用了同一个validator --%>
 		<form:form id="newFatherModule" commandName="fatherModule" action="${basePath}updateFatherModule" method="POST">
 			<table class="au">
 				<tr>

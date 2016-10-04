@@ -31,15 +31,15 @@
 			<ul class="child">
 				<!--默认显示父板块列表  -->
 				<!-- http://localhost:8080/sfk_BBS02/adminIndex-->
-				<!--原理,项目中的明明规则中连接的最后部分何jsp文件的名字是相同的,详细可以看ActionURL和PagePath  -->
+				<!--约定,项目中的明明规则中连接的最后部分何jsp文件的名字是相同的,详细可以看ActionURL和PagePath  -->
 				<!--从下面可以发现java脚本功能是非常强大的  -->
 				<li><a <% if(servletPath.contains("adminIndex")){ %> class="current"<%} %> href="<%=projectPath %>adminIndex">父板块列表</a></li>
 				<li><a <% if(servletPath.contains("newFatherModule")){ %> class="current"<%} %> href="<%=projectPath%>newFatherModule">添加父板块</a></li>
 				<%--如果是更改父版块，则出现一个不能点击的显示标签 --%>
 				<% if(servletPath.contains("updateFatherModule")){ %><li><a class="current">编辑父版块</a></li> <%} %>
-				<li><a href="#">子板块列表</a></li>
+				<li><a <% if(servletPath.contains("sonModuleList")){ %> class="current"<%} %> href="<%=projectPath%>sonModuleList">子板块列表</a></li>
 				<!--/newSonModuleGo"  -->
-				<li><a <% if(servletPath.contains("newSonModuleGo")){ %> class="current"<%} %> href="<%=projectPath%>newSonModuleGo">添加子板块</a></li>
+				<li><a <% if(servletPath.contains("newSonModule")){ %> class="current"<%} %> href="<%=projectPath%>newSonModuleGo">添加子板块</a></li>
 				<li><a href="#">帖子管理</a></li>
 			</ul>
 		</li>

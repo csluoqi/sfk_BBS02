@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html  lang="zh-CN">
+
 <%@include file="../common/adminHeader.jsp"%>
-<c:set value="<%=projectPath %>" var="basePath"/>
+
 <body>
 	<jsp:include page="../common/adminTop.jsp" />
 	<jsp:include page="../common/adminNavBar.jsp"/>
-
+<c:set value="<%=projectPath %>" var="basePath"/>
 	<div id="main" style="height: 1000px;">
 		<div class="title" style="margin-bottom:20px">添加父板块</div>
 		

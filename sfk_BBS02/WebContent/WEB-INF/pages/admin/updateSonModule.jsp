@@ -3,16 +3,20 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <%@include file="../common/adminHeader.jsp"%>
+<c:set value="<%=projectPath %>" var="basePath"/>
 <body>
 	<jsp:include page="../common/adminTop.jsp" />
-	<jsp:include page="../common/adminNavBar.jsp" />
+	<jsp:include page="../common/adminNavBar.jsp"/>
 
 	<div id="main" style="height: 1000px;">
-		<div class="title" style="margin-bottom: 20px">添加子板块</div>
+		<div class="title" style="margin-bottom:20px">编辑父板块</div>
 		
-		<form:form id="newSonModule" commandName="sonModule"
-			action="${basePath}newSonModule" method="POST">
+	<form:form id="newSonModule" commandName="sonModule"
+			action="${basePath}updateSonModule" method="POST">
 			<table class="au">
+				<tr hidden="hidden">
+					<td><form:input path="id" /></td>
+				</tr>
 				<tr>
 					<td>父版块名称</td>
 					<td><form:select id="fatherModule" path="fatherModule.id"
@@ -37,9 +41,9 @@
 				</tr>
 			</table>
 			<input class="btn" style="cursor: pointer; margin-top: 10px"
-				type="submit" name="submit" value="添加">
+				type="submit" name="submit" value="更新">
 		</form:form>
 	</div>
-
+	
 </body>
 </html>
